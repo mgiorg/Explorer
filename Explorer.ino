@@ -20,7 +20,7 @@
 /**
  * definizione pin sensore di suono
  */
-#define SUONO 0
+#define PIN_SUONO 0
 
 /**
  * definizione pin bumper
@@ -36,10 +36,21 @@
 #define LED_BLU 0
 
 /**
- * blocco di costanti per il funzionamento del programma
+ * blocco di costanti per le soglie
+ */
+#define SOGLIA_LUCE_SX 0
+#define SOGLIA_LUCE_DX 0
+#define SOGLIA_LUCE_CN 0
+
+#define SOGLIA_SUONO 0
+
+/**
+ * blocco di costanti per il funzionamento dei motori
  */
 #define LED_TIME 3000 //tempo in cui il led deve rimanere acceso
 #define TURN_TIME 500 //tempo in cui il robot deve girarsi
+#define BACK_TIME 300 //tempo in cui il robot deve tornare indietro
+#define STOP_TIME 200 //tempo in cui il robot sta fermo prima di girarsi
 
 void setup()
 {
@@ -49,8 +60,6 @@ void setup()
 	 * blocco di funzioni di inizializzazione
 	 */
 	initMotori();
-	initLuci();
-	initSuono();
 	initBumper();
 	initLed();
 
@@ -63,13 +72,10 @@ void loop()
 
 	/**
 	 * blocco di letture di tutti i sensori del robot
-	 *
-	 * lo scopo è quello di non usare delay() perché rallentano il programma 
-	 * si usano solo millis()
 	 */
-	int lettura_luce = handleLuci();
-	int lettura_suono = handleSuono();
-	int lettura_bumper = handleBumper();
+	uint8_t lettura_luce = handleLuci();
+	uint8_t lettura_suono = handleSuono();
+	uint8_t lettura_bumper = handleBumper();
 
 	if(lettura_luce)
 	{
@@ -78,39 +84,36 @@ void loop()
 		{
 			case 1: //quando ha letto la luce di sinistra
 			fermo();
-			ledVerde();
-			delay(LED_TIME); //aspetta 3 secondi
+			ledVerde(); delay(LED_TIME); //aspetta 3 secondi
 
-			destra();
-			delay(TURN_TIME); //gira di 90°
+			destra(); delay(TURN_TIME); //gira di 90°
 			avanti();
 			break;
 
 			case 2: //quando ha letto la luce di destra
 			fermo();
-			ledVerde();
-			delay(LED_TIME); //aspetta 3 secondi
+			ledVerde(); delay(LED_TIME); //aspetta 3 secondi
 
-			sinistra();
-			delay(TURN_TIME); //gira di 90°
+			sinistra(); delay(TURN_TIME); //gira di 90°
 			avanti();
 			break;
 
 			case 3: //quando ha letto la luce centrale
 			fermo();
-			ledVerde();
-			delay(LED_TIME); //aspetta 3 secondi
+			ledVerde(); delay(LED_TIME); //aspetta 3 secondi
 
-			destra();
-			delay(TURN_TIME); //gira di 90°
-			delay(TURN_TIME); //gira di 90°
+			destra(); delay(TURN_TIME); /* gira di 90° */ delay(TURN_TIME); /* gira di 90° */
 			avanti();
 			break;
 		}
 	}
 	else if(lettura_suono)
 	{
-		//fermare il robot e accendere il led verde per 3 secondi
+		//fermare il robot e accendere il led giallo per 3 secondi
+		fermo();
+		ledGiallo(); delay(LED_TIME);
+
+		avanti(); delay(TURN_TIME); 
 	}
 	else if(lettura_bumper)
 	{
@@ -118,9 +121,17 @@ void loop()
 		switch(lettura_bumper)
 		{
 			case 1: //quando ha letto il bumper di sinistra
+			fermo(); delay(STOP_TIME); //sta fermo per STOP_TIMEms
+			indietro(); delay(BACK_TIME); //torna indietro per BACK_TIMEms
+			destra(); delay(TURN_TIME); //gira a destra per TURN_TIMEms
+			avanti();
 			break;
 
 			case 2: //quando ha letto il bumper di destra
+			fermo(); delay(STOP_TIME); //sta fermo per STOP_TIMEms
+			indietro(); delay(BACK_TIME); //torna indietro per BACK_TIMEms
+			sinistra(); delay(TURN_TIME); //gira a sinistra per TURN_TIMEms
+			avanti();
 			break;
 		}
 	}

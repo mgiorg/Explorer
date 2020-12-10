@@ -1,7 +1,6 @@
 /**
  * Motori.ino
  */
-
 void initMotori()
 {
 	//inizializzazione pin motori
@@ -14,11 +13,19 @@ void initMotori()
 void avanti()
 {
 	//robot avanti
+	digitalWrite(DIR_SX, LOW); //il motore sinistro gira in senso antiorario
+	digitalWrite(DIR_DX, HIGH); //il motore destro gira in senso orario
+	digitalWrite(PWM_SX, HIGH); //potenza massima
+	digitalWrite(PWM_DX, HIGH); //potenza massima
 }
 
 void indietro()
 {
 	//robot indietro
+	digitalWrite(DIR_SX, HIGH); //il motore sinistro gira in senso orario
+	digitalWrite(DIR_DX, LOW); //il motore destro gira in senso antiorario
+	digitalWrite(PWM_SX, HIGH); //potenza massima
+	digitalWrite(PWM_DX, HIGH); //potenza massima
 }
 
 void destra()
