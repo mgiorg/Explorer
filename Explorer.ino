@@ -1,26 +1,35 @@
 /**
  * Explorer.ino
+ * Massimo Giordano
  */
 
 /**
  * definizione pin motori
  */
-#define DIR_SX 0
-#define DIR_DX 0
-#define PWM_SX 0
-#define PWM_DX 0
+#define DIR_A1 4
+#define DIR_B1 3
+#define DIR_A2 7
+#define DIR_B2 8
+#define PWM_1 9
+#define PWM_2 6
 
 /**
  * definizione pin sensori di luce
  */
-#define LUCE_SX 0
-#define LUCE_DX 0
-#define LUCE_CN 0
+#define LUCE_1 A0
+#define LUCE_2 A1
+#define LUCE_3 A2
+#define LUCE_4 A3
 
 /**
  * definizione pin sensore di suono
  */
 #define PIN_SUONO 0
+
+/**
+ * definizione pin sensore di gas
+ */
+#define PIN_GAS 0
 
 /**
  * definizione pin bumper
@@ -43,11 +52,12 @@
 #define SOGLIA_LUCE_CN 0
 
 #define SOGLIA_SUONO 0
+#define SOGLIA_GAS 0
 
 /**
  * blocco di costanti per il funzionamento dei motori
  */
-#define LED_TIME 3000 //tempo in cui il led deve rimanere acceso
+#define LED_TIME 2500 //tempo in cui il led deve rimanere acceso
 #define TURN_TIME 500 //tempo in cui il robot deve girarsi
 #define BACK_TIME 300 //tempo in cui il robot deve tornare indietro
 #define STOP_TIME 200 //tempo in cui il robot sta fermo prima di girarsi
