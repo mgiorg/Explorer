@@ -2,6 +2,12 @@
  * Motori.ino
  * Massimo Giordano
  */
+#define DIR_A2 4
+#define DIR_B2 3
+#define DIR_A1 7
+#define DIR_B1 8
+#define PWM_2 9
+#define PWM_1 6
 
 void initMotori()
 {
@@ -14,68 +20,57 @@ void initMotori()
 	pinMode(PWM_2, OUTPUT);
 }
 
-/**
- * funzione unica con parametro che sceglie quale movimento effettuare
- * ricordarsi di modificare le direzioni dei motori e la velocità per ogni pwm
- */
-void movimento(char carattere) 
+void avanti()
 {
-	switch(carattere)
-	{
-		case 'A':
-			//Il robot deve andare avanti
-			digitalWrite(DIR_A1, HIGH);
-			digitalWrite(DIR_B1, LOW);
-			analogWrite(PWM_1, HIGH);
+	digitalWrite(DIR_A1, LOW);
+	digitalWrite(DIR_B1, HIGH);
+	analogWrite(PWM_1, 255);
 
-			digitalWrite(DIR_A2, LOW);
-			digitalWrite(DIR_B2, HIGH);
-			analogWrite(PWM_2, HIGH);
-		break;
+	digitalWrite(DIR_A2, LOW);
+	digitalWrite(DIR_B2, HIGH);
+	analogWrite(PWM_2, 255);
+}
 
-		case 'I':
-			//Il robot deve andare indietro
-			digitalWrite(DIR_A1, LOW);
-			digitalWrite(DIR_B1, HIGH);
-			analogWrite(PWM_1, HIGH);
+void indietro()
+{
+	digitalWrite(DIR_A1, HIGH);
+	digitalWrite(DIR_B1, LOW);
+	analogWrite(PWM_1, 255);
 
-			digitalWrite(DIR_A2, HIGH);
-			digitalWrite(DIR_B2, LOW);
-			analogWrite(PWM_2, HIGH);
-		break;
+	digitalWrite(DIR_A2, HIGH);
+	digitalWrite(DIR_B2, LOW);
+	analogWrite(PWM_2, 255);
+}
 
-		case 'D':
-			//Il robot deve girare a destra
-			//Il motore di destra deve andare in dietro e quello di sinistra avanti
-			digitalWrite(DIR_A1, HIGH);
-			digitalWrite(DIR_B1, LOW);
-			analogWrite(PWM_1, HIGH);
+void destra()
+{
+	digitalWrite(DIR_A1, LOW);
+	digitalWrite(DIR_B1, HIGH);
+	analogWrite(PWM_1, 255);
 
-			digitalWrite(DIR_A2, HIGH);
-			digitalWrite(DIR_B2, LOW);
-			analogWrite(PWM_2, HIGH);
-		break;
+	digitalWrite(DIR_A2, HIGH);
+	digitalWrite(DIR_B2, LOW);
+	analogWrite(PWM_2, 255);
+}
 
-		case 'S':
-			//Il robot deve girare a sinistra
-			//Il motore di destra deve andare avanti e quello di sinistra indietro
-			digitalWrite(DIR_A1, LOW);
-			digitalWrite(DIR_B1, HIGH);
-			analogWrite(PWM_1, HIGH);
+void sinistra()
+{
+	digitalWrite(DIR_A1, HIGH);
+	digitalWrite(DIR_B1, LOW);
+	analogWrite(PWM_1, 255);
 
-			digitalWrite(DIR_A2, LOW);
-			digitalWrite(DIR_B2, HIGH);
-			analogWrite(PWM_2, HIGH);
-		break;
+	digitalWrite(DIR_A2, LOW);
+	digitalWrite(DIR_B2, HIGH);
+	analogWrite(PWM_2, 255);
+}
 
-		case 'F':
-			digitalWrite(DIR_A1, HIGH);
-			digitalWrite(DIR_B1, HIGH);
-			analogWrite(PWM_1, LOW);
+void fermo()
+{
+	digitalWrite(DIR_A1, 255);
+	digitalWrite(DIR_B1, 255);
+	analogWrite(PWM_1, 0);
 
-			digitalWrite(DIR_A2, HIGH);
-			digitalWrite(DIR_B2, HIGH);
-			analogWrite(PWM_2, LOW);
-		break;
-	}
+	digitalWrite(DIR_A2, 255);
+	digitalWrite(DIR_B2, 255);
+	analogWrite(PWM_2, 0);
 }

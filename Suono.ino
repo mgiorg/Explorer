@@ -1,6 +1,8 @@
 /**
  * Suono.ino
  */
+#define PIN_SUONO A4
+#define SOGLIA_SUONO 0
 
 uint8_t handleSuono()
 {

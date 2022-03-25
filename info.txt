@@ -1,22 +1,5 @@
-Pin Motori
-Dir Sx -> 
-Dir Dx -> 
-Pwm Sx -> 
-Pwm Dx -> 
+diametro trackball = 2,15cm
+distanza buchi trackball = +- 0,3cm
 
-Pin Luci
-Sx -> A0
-Dx -> A1
-Cn -> A2
-
-Pin Suono
--> A3
-
-Pin Bumper
-Sx -> 7
-Dx -> 8
-
-Pin Led
-R -> 9
-G -> 10
-B -> 11
+distanza orizzontale buchi bumper = 22,20mm
+distanza verticale buchi bumper = 10.30mm
