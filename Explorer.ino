@@ -40,10 +40,9 @@ unsigned long millis_gas_on = 0;
  *
  * impostare un corretto valore prendendo in considerazione i delay che ci sono
  */
-#define MAX_TIME_BUMP 0 //per uscire dagli angoli con maestria
+#define MAX_TIME_BUMP 0 //definito un tempo in cui non ha letto nulla
 
 unsigned long time_bump = 0;
-unsigned long prev_time = 0;
 
 uint8_t bump_counter = 0; //conta quante volte i bumper si sono attivati in un tempo specifico
 #define MAX_COUNTER 4 //numero massimo di impatti nel tempo MAX_TIME_BUMP
@@ -114,6 +113,7 @@ void loop()
 				sinistra(); delay(TURN_TIME); //gira di 90°
 				avanti();
 			}
+			time_light = millis(); //resetto la variabile di conteggio
 		}
 	}
 
