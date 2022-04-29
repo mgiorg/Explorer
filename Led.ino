@@ -1,10 +1,16 @@
 /**
  * Led.ino
  */
+/**
+ * definizione pin led
+ */
+#define LED_ROSSO 10 //GAS
+#define LED_VERDE 2 //LUCE
+#define LED_GIALLO 5 //SUONO
 
 void initLed()
 {
-	//inizializzazione pin led RGB
+	//inizializzazione pin 
 	pinMode(LED_ROSSO, OUTPUT);
 	pinMode(LED_VERDE, OUTPUT);
 	pinMode(LED_GIALLO, OUTPUT);

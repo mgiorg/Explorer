@@ -33,17 +33,17 @@ uint8_t handleLuci()
 	{
 		return 1; //nel loop, 1 vuol dire sinistra
 	}
-	else if(lettura_luce_2 >= SOGLIA_LUCE_2) //se ha letto la luce a destra
+	else if(lettura_luce_2 >= SOGLIA_LUCE_2) //se ha letto la luce a in alto a sinistra
 	{
-		return 2; //nel loop, 2 vuol dire destra
+		return 2; //nel loop, 2 vuol dire in alto a sinistra
 	}
-	else if(lettura_luce_3 >= SOGLIA_LUCE_3) //se ha letto la luce davanti
+	else if(lettura_luce_3 >= SOGLIA_LUCE_3) //se ha letto la luce in alto a destra
 	{
-		return 3; //nel loop, 3 vuol dire centro
+		return 3; //nel loop, 3 vuol dire in alto a destra
 	}
-	else if(lettura_luce_4 >= SOGLIA_LUCE_4) //se ha letto la luce davanti
+	else if(lettura_luce_4 >= SOGLIA_LUCE_4) //se ha letto la luce destra
 	{
-		return 4; //nel loop, 3 vuol dire centro
+		return 4; //nel loop, 3 vuol dire destra
 	}
 	else //se non ha letto luci
 	{

@@ -66,11 +66,11 @@ void sinistra()
 
 void fermo()
 {
-	digitalWrite(DIR_A1, 255);
-	digitalWrite(DIR_B1, 255);
+	digitalWrite(DIR_A1, HIGH);
+	digitalWrite(DIR_B1, HIGH);
 	analogWrite(PWM_1, 0);
 
-	digitalWrite(DIR_A2, 255);
-	digitalWrite(DIR_B2, 255);
+	digitalWrite(DIR_A2, HIGH);
+	digitalWrite(DIR_B2, HIGH);
 	analogWrite(PWM_2, 0);
 }
