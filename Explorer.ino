@@ -24,6 +24,8 @@
  */
 #define DELAY_LIGHT 0 
 #define DELAY_SOUND 0
+uint8_t sound_counter = 0;
+
 #define DELAY_GAS 0
 #define TIME_GAS_ON 10000 //10 secondi
 
@@ -43,7 +45,7 @@ unsigned long millis_gas_on = 0;
 unsigned long time_bump = 0;
 unsigned long prev_time = 0;
 
-uint8_t counter = 0; //conta quante volte i bumper si sono attivati in un tempo specifico
+uint8_t bump_counter = 0; //conta quante volte i bumper si sono attivati in un tempo specifico
 #define MAX_COUNTER 4 //numero massimo di impatti nel tempo MAX_TIME_BUMP
 
 void setup()
@@ -129,11 +131,25 @@ void loop()
 		 */
 		if((millis() - time_sound) >= DELAY_SOUND)
 		{
+			sound_counter++;
+			int resto = sound_counter%2; //trova il resto dividendo il contatore per due
 			//fermare il robot e accendere il led giallo per 3 secondi
 			fermo();
 			ledGiallo(); delay(LED_TIME);
-			destra(); delay(TURN_TIME);
 
+			/**
+			 * controlli per far variare la direzione del robot all'interno 
+			 * del campo e per evitare che si incastri facendo sempre
+			 * lo stesso giro
+			 */
+			if(resto == 1) //se il numero è dispari gira a destra
+			{
+				destra(); delay(TURN_TIME);
+			}
+			else //altrimenti gira a sinistra
+			{
+				sinistra(); delay(TURN_TIME);
+			}
 			avanti();
 
 			time_sound = millis();
@@ -181,9 +197,9 @@ void loop()
 		{
 			time_bump = millis(); //inizia il conteggio
 		}
-		counter++; //incremento il contatore
+		bump_counter++; //incremento il contatore
 
-		if(counter == MAX_COUNTER)
+		if(bump_counter == MAX_COUNTER)
 		{
 			destra(); delay(TURN_TIME); delay(TURN_TIME); //si gira di 180°
 		}
@@ -208,7 +224,7 @@ void loop()
 	if((millis() - time_bump) >= MAX_TIME_BUMP) //se è passato parecchio tempo
 	{
 		//azzero tutti i valori di conteggio dei bumper
-		counter = 0;
+		bump_counter = 0;
 		time_bump = 0;
 	}
 }
