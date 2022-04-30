@@ -9,6 +9,9 @@ uint8_t handleGas()
 {
 	int lettura_gas = analogRead(PIN_GAS);
 
+	Serial.print("La lettura del gas: ");
+	Serial.println(lettura_gas);
+
 	if(lettura_gas >= SOGLIA_GAS) //se ha rilevato la presenza di gas
 	{
 		return 1; //GAS TROVATO
