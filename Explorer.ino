@@ -3,8 +3,6 @@
  * Massimo Giordano
  */
 
-
-
 /**
  * blocco di costanti per il funzionamento dei motori
  */
