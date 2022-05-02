@@ -49,9 +49,4 @@ uint8_t handleLuci()
 	{
 		return 0; //nel loop, 0 vuol dire che non ha trovato nulla
 	}
-
-	lettura_luce_1 = 0;
-	lettura_luce_2 = 0;
-	lettura_luce_3 = 0;
-	lettura_luce_4 = 0;
 }

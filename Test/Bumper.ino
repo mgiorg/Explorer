@@ -18,6 +18,11 @@ uint8_t handleBumper() //l'ho fatta in maniera molto semplice, la rendo più com
 	uint8_t lettura_bump_sx = digitalRead(BUMP_SX);
 	uint8_t lettura_bump_dx = digitalRead(BUMP_DX);
 
+	Serial.print("bump sinistra: ");
+	Serial.print(lettura_bump_sx);
+	Serial.print("		---			bump destra: ");
+	Serial.println(lettura_bump_dx);
+
 	if(lettura_bump_sx == LOW) //se ha colpito la parete a sinistra
 	{
 		return 1;

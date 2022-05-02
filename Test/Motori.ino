@@ -22,10 +22,12 @@ void initMotori()
 
 void avanti()
 {
+	//sinistro
 	digitalWrite(DIR_A1, LOW);
 	digitalWrite(DIR_B1, HIGH);
 	analogWrite(PWM_1, 255);
 
+	//destro
 	digitalWrite(DIR_A2, LOW);
 	digitalWrite(DIR_B2, HIGH);
 	analogWrite(PWM_2, 255);
@@ -33,10 +35,12 @@ void avanti()
 
 void indietro()
 {
+	//sinistro
 	digitalWrite(DIR_A1, HIGH);
 	digitalWrite(DIR_B1, LOW);
 	analogWrite(PWM_1, 255);
 
+	//destro
 	digitalWrite(DIR_A2, HIGH);
 	digitalWrite(DIR_B2, LOW);
 	analogWrite(PWM_2, 255);
@@ -44,21 +48,25 @@ void indietro()
 
 void destra()
 {
+	//sinistro
 	digitalWrite(DIR_A1, LOW);
 	digitalWrite(DIR_B1, HIGH);
 	analogWrite(PWM_1, 255);
 
+	//destro
 	digitalWrite(DIR_A2, HIGH);
 	digitalWrite(DIR_B2, LOW);
-	analogWrite(PWM_2, 255);
+	analogWrite(PWM_2, 240);
 }
 
 void sinistra()
 {
+	//sinistro
 	digitalWrite(DIR_A1, HIGH);
 	digitalWrite(DIR_B1, LOW);
 	analogWrite(PWM_1, 255);
 
+	//destro
 	digitalWrite(DIR_A2, LOW);
 	digitalWrite(DIR_B2, HIGH);
 	analogWrite(PWM_2, 255);
@@ -66,10 +74,12 @@ void sinistra()
 
 void fermo()
 {
+	//sinistro
 	digitalWrite(DIR_A1, HIGH);
 	digitalWrite(DIR_B1, HIGH);
 	analogWrite(PWM_1, 0);
 
+	//destro
 	digitalWrite(DIR_A2, HIGH);
 	digitalWrite(DIR_B2, HIGH);
 	analogWrite(PWM_2, 0);

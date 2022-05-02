@@ -7,8 +7,8 @@
  */
 #define LED_TIME 2800 //tempo in cui il led deve rimanere acceso
 
-#define TURN_TIME 500 //tempo in cui il robot deve girarsi
-#define SHORT_TIME 250
+#define TURN_TIME 480 //tempo in cui il robot deve girarsi
+#define SHORT_TIME 225
 #define BACK_TIME 300 //tempo in cui il robot deve tornare indietro
 #define STOP_TIME 200 //tempo in cui il robot sta fermo prima di girarsi
 
@@ -37,15 +37,12 @@ unsigned long millis_gas_on = 0;
  *
  * impostare un corretto valore prendendo in considerazione i delay che ci sono
  */
-#define MAX_TIME_BUMP 0 //definito un tempo in cui non ha letto nulla
+#define MAX_TIME_BUMP 5000 //definito un tempo in cui non ha letto nulla
 
 unsigned long time_bump = 0;
 
 uint8_t bump_counter = 0; //conta quante volte i bumper si sono attivati in un tempo specifico
 #define MAX_COUNTER 4 //numero massimo di impatti nel tempo MAX_TIME_BUMP
-
-
-
 
 /**
  * programma per testare sensori e movimento 
@@ -62,6 +59,8 @@ void setup()
 	initMotori();
 	initBumper();
 	initLed();
+
+	pinMode(A5, INPUT);
 }
 
 void loop()
@@ -71,7 +70,7 @@ void loop()
 	 * 
 	 * testare se i motori girano alla stessa velocità
 	 */
-	avanti();
+	//avanti();
 
 	/**
 	 * secondo step 
@@ -79,10 +78,14 @@ void loop()
 	 * verificare se girando a destra e a sinistra, con i diversi tempi effettua curve corrette
 	 */
 	//destra(); delay(SHORT_TIME);
+	//avanti(); delay(1000); fermo(); delay(750);
 	//destra(); delay(TURN_TIME);
+	//avanti(); delay(1000); fermo(); delay(750);
 
 	//sinistra(); delay(SHORT_TIME);
+	//avanti(); delay(1000); fermo(); delay(750);
 	//sinistra(); delay(TURN_TIME);
+	//avanti(); delay(1000); fermo(); delay(750);
 	
 	/**
 	 * terzo step
@@ -117,6 +120,50 @@ void loop()
 	 * una volta accertato che tutto funziona nel modo giusto verificare anche 
 	 * l'uscita dagli angoli e impostare i corretti tempi di attesa
 	 */
-	//uint8_t lettura_bumper = handleBumper();
+	// uint8_t lettura_bumper = handleBumper();
 	
+	// if(lettura_bumper)
+	// {
+	// 	if(time_bump == 0) //se ha letto per la prima volta
+	// 	{
+	// 		time_bump = millis(); //inizia il conteggio
+	// 	}
+	// 	bump_counter++; //incremento il contatore
+
+	// 	if(bump_counter == MAX_COUNTER)
+	// 	{
+	// 		indietro(); delay(BACK_TIME);
+	// 		destra(); delay(TURN_TIME); delay(TURN_TIME); //si gira di 180°
+	// 		avanti();
+
+	// 		lettura_bumper = 0;
+	// 	}
+
+	// 	//fermare il robot, andare poco indietro e girare nel verso opposto al bumper
+	// 	switch(lettura_bumper)
+	// 	{
+	// 		case 1: //quando ha letto il bumper di sinistra
+	// 		indietro(); delay(BACK_TIME); //torna indietro per BACK_TIMEms
+	// 		destra(); delay(TURN_TIME); //gira a destra per TURN_TIMEms
+	// 		avanti();
+	// 		break;
+
+	// 		case 2: //quando ha letto il bumper di destra
+	// 		indietro(); delay(BACK_TIME); //torna indietro per BACK_TIMEms
+	// 		sinistra(); delay(TURN_TIME); //gira a sinistra per TURN_TIMEms
+	// 		avanti();
+	// 		break;
+	// 	}
+	// }
+
+	// if((millis() - time_bump) >= MAX_TIME_BUMP) //se è passato parecchio tempo
+	// {
+	// 	//azzero tutti i valori di conteggio dei bumper
+	// 	bump_counter = 0;
+	// 	time_bump = 0;
+	// }
+	// 
+	ledRosso();
+	ledVerde();
+	ledGiallo();
 }
