@@ -24,12 +24,13 @@
 uint8_t sound_counter = 0;
 
 #define DELAY_GAS 0
-#define TIME_GAS_ON 10000 //10 secondi
 
 unsigned long time_light = 0;
 unsigned long time_sound = 0;
 unsigned long time_gas = 0;
-unsigned long millis_gas_on = 0;
+int prev_read_gas = 0;
+uint16_t tot_read_gas = 0;
+int grow_gas_millis = 0;
 
 /**
  * per uscire dagli angoli è necessario avviare un conteggio appena uno switch
@@ -110,7 +111,22 @@ void loop()
 	 * verificare dopo quanto si attiva, se ha bisogno di scaldarsi e se legge correttamente i valori,
 	 * altrimenti non verrà implementato
 	 */
-	//uint8_t lettura_gas = handleGas();
+	uint8_t lettura_gas = handleGas();
+
+	//Serial.print(" - Valore binario = ");
+	//Serial.println(lettura_gas);
+
+	/**
+	 * RICORDARSI DI SCRIVERE UN PROGRAMMA CHE CONTROLLA LA VELOCITà DI SATURAZIONE DEL SENSORE
+	 * DI GAS TRAMITE LA SOMMA DI TUTTI I VALORI LETTI IN UN CERTO INTERVALLO DI TEMPO STABILITO DA ME
+	 * MISURANDO QUANTO TEMPO CI METTEVA IL SENSORE A PASSARE DA X ALLA SOGLIA
+	 *
+	 * VEDENDO LA SOMMA AUMENTARE AUMENTA ANCHE LA PENDENZA DELLA RETTA
+	 */
+	
+	// int prev_read_gas = 0;
+	// uint16_t tot_read_gas = 0;
+	// int grow_gas_millis = 0;
 	
 	/**
 	 * sesto step
@@ -163,7 +179,7 @@ void loop()
 	// 	time_bump = 0;
 	// }
 	// 
-	ledRosso();
-	ledVerde();
-	ledGiallo();
+	// ledRosso();
+	// ledVerde();
+	// ledGiallo();
 }

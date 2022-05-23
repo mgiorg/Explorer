@@ -3,7 +3,7 @@
  */
 
 #define PIN_GAS A4
-#define SOGLIA_GAS 700
+#define SOGLIA_GAS 150
 
 uint8_t handleGas()
 {
@@ -14,10 +14,23 @@ uint8_t handleGas()
 
 	if(lettura_gas >= SOGLIA_GAS) //se ha rilevato la presenza di gas
 	{
-		return 1; //GAS TROVATO
-	}
+		if(lettura_gas > (prev_read_gas + 1)) 
+		{
+			prev_read_gas = lettura_gas;
+
+			return 1; //GAS TROVATO
+		}
+		else 
+		{
+			prev_read_gas = lettura_gas;
+
+			return 0;
+		}
+	}		
 	else //se non ha trovato niente
 	{
+		prev_read_gas = lettura_gas;
+
 		return 0; //nulla
 	}
 }

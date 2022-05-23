@@ -7,10 +7,10 @@
 #define LUCE_3 A2
 #define LUCE_4 A3
 
-#define SOGLIA_LUCE_1 700
-#define SOGLIA_LUCE_2 700
-#define SOGLIA_LUCE_3 700
-#define SOGLIA_LUCE_4 700
+#define SOGLIA_LUCE_1 85
+#define SOGLIA_LUCE_2 85
+#define SOGLIA_LUCE_3 85
+#define SOGLIA_LUCE_4 85
 
 uint8_t handleLuci()
 {
@@ -49,9 +49,4 @@ uint8_t handleLuci()
 	{
 		return 0; //nel loop, 0 vuol dire che non ha trovato nulla
 	}
-
-	lettura_luce_1 = 0;
-	lettura_luce_2 = 0;
-	lettura_luce_3 = 0;
-	lettura_luce_4 = 0;
 }

@@ -6,12 +6,12 @@
 /**
  * blocco di costanti per il funzionamento dei motori
  */
-#define LED_TIME 2800 //tempo in cui il led deve rimanere acceso
+#define LED_TIME 3000 //tempo in cui il led deve rimanere acceso
 
-#define TURN_TIME 500 //tempo in cui il robot deve girarsi
-#define SHORT_TIME 250
-#define BACK_TIME 300 //tempo in cui il robot deve tornare indietro
-#define STOP_TIME 200 //tempo in cui il robot sta fermo prima di girarsi
+#define TURN_TIME 280 //tempo in cui il robot deve girarsi
+#define SHORT_TIME 180
+#define BACK_TIME 250 //tempo in cui il robot deve tornare indietro
+#define STOP_TIME 150 //tempo in cui il robot sta fermo prima di girarsi
 
 /**
  * dichiarazione costanti per spegnere i sensori di luce, suono e gas. 
@@ -20,17 +20,16 @@
  * dichiarazione di un'ulteriore variabile per far accendere il sensore dopo 
  * 10 secondi, tempo necessario a farlo scaldare
  */
-#define DELAY_LIGHT 0 
-#define DELAY_SOUND 0
+#define DELAY_LIGHT 2000
+#define DELAY_SOUND 2000
 uint8_t sound_counter = 0;
+uint8_t sound_counter2 = 0;
 
-#define DELAY_GAS 0
-#define TIME_GAS_ON 10000 //10 secondi
+#define DELAY_GAS 10000
 
 unsigned long time_light = 0;
 unsigned long time_sound = 0;
 unsigned long time_gas = 0;
-unsigned long millis_gas_on = 0;
 
 /**
  * per uscire dagli angoli è necessario avviare un conteggio appena uno switch
@@ -38,12 +37,15 @@ unsigned long millis_gas_on = 0;
  *
  * impostare un corretto valore prendendo in considerazione i delay che ci sono
  */
-#define MAX_TIME_BUMP 0 //definito un tempo in cui non ha letto nulla
+#define MAX_TIME_BUMP 5000 //definito un tempo in cui non ha letto nulla
 
 unsigned long time_bump = 0;
 
 uint8_t bump_counter = 0; //conta quante volte i bumper si sono attivati in un tempo specifico
 #define MAX_COUNTER 4 //numero massimo di impatti nel tempo MAX_TIME_BUMP
+
+unsigned long light_on_sound = 0;
+#define LIGHT_ON_SOUND_DELAY 17000
 
 void setup()
 {
@@ -61,11 +63,13 @@ void setup()
 	time_light = millis();
 	time_sound = millis();
 	time_gas = millis();
-	millis_gas_on = millis();
+
+	light_on_sound = millis();
 }
 
 void loop()
 {
+	ledSpento();
 	avanti(); //il robot inizia andando avanti
 
 	/**
@@ -130,10 +134,10 @@ void loop()
 		if((millis() - time_sound) >= DELAY_SOUND)
 		{
 			sound_counter++;
-			int resto = sound_counter%2; //trova il resto dividendo il contatore per due
+			int resto = sound_counter % 2; //trova il resto dividendo il contatore per due
 			//fermare il robot e accendere il led giallo per 3 secondi
 			fermo();
-			ledGiallo(); delay(LED_TIME);
+			ledGiallo(); delay(LED_TIME); ledSpento();
 
 			/**
 			 * controlli per far variare la direzione del robot all'interno 
@@ -154,36 +158,45 @@ void loop()
 		}
 	}
 
+	if((millis() - light_on_sound) >= LIGHT_ON_SOUND_DELAY)
+	{
+			//fermare il robot e accendere il led giallo per 3 secondi
+			fermo();
+			ledGiallo(); delay(LED_TIME); ledSpento();
+
+			avanti();
+
+			light_on_sound = millis();
+	}
+
 	/**
 	 * attivo il gas dopo 10 secondi
 	 */
-	if((millis() - millis_gas_on) >= TIME_GAS_ON)
+	
+	/**
+	 * controllo se il robot ha trovato il gas
+	 */
+	uint8_t lettura_gas = handleGas();
+
+	if(lettura_gas)
 	{
 		/**
-		 * controllo se il robot ha trovato il gas
+		 * algoritmo per spegnere il sensore per il tempo necessario ad
+		 * allontanarsi dalla bocchetta del gas
 		 */
-		uint8_t lettura_gas = handleGas();
-
-		if(lettura_gas)
+		if((millis() - time_gas) >= DELAY_GAS)
 		{
-			/**
-			 * algoritmo per spegnere il sensore per il tempo necessario ad
-			 * allontanarsi dalla bocchetta del gas
-			 */
-			if((millis() - time_gas) >= DELAY_GAS)
-			{
-				//fermare il robot e accendere il led giallo per 3 secondi
-				fermo();
-				ledRosso(); delay(LED_TIME);
+			//fermare il robot e accendere il led giallo per 3 secondi
+			fermo();
+			indietro(); delay(500); fermo();
+			ledRosso(); delay(LED_TIME); ledSpento();
 
-				avanti();
+			avanti();
 
-				time_gas = millis();
-			}
+			time_gas = millis();
 		}
 	}
 		
-
 	/**
 	 * ultimo controllo da fare è se il robot ha urtato con i bumper
 	 */
@@ -199,7 +212,11 @@ void loop()
 
 		if(bump_counter == MAX_COUNTER)
 		{
+			indietro(); delay(BACK_TIME);
 			destra(); delay(TURN_TIME); delay(TURN_TIME); //si gira di 180°
+			avanti();
+
+	 		lettura_bumper = 0;
 		}
 
 		//fermare il robot, andare poco indietro e girare nel verso opposto al bumper

@@ -24,7 +24,7 @@ void avanti()
 {
 	digitalWrite(DIR_A1, LOW);
 	digitalWrite(DIR_B1, HIGH);
-	analogWrite(PWM_1, 255);
+	analogWrite(PWM_1, 252);
 
 	digitalWrite(DIR_A2, LOW);
 	digitalWrite(DIR_B2, HIGH);

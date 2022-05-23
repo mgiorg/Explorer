@@ -39,9 +39,9 @@ void ledVerde()
 void ledGiallo()
 {
 	//accensione colore giallo del led
-	digitalWrite(LED_ROSSO, HIGH);
-	digitalWrite(LED_VERDE, HIGH);
-	digitalWrite(LED_GIALLO, LOW);
+	digitalWrite(LED_ROSSO, LOW);
+	digitalWrite(LED_VERDE, LOW);
+	digitalWrite(LED_GIALLO, HIGH);
 }
 
 void ledSpento()
